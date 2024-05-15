@@ -76,8 +76,8 @@ fetch(endpoint1)
 </html>
 ```
 
-### Working with Heading 
-
+### Working with Heading and sheets
+- In the Excel file that you created previously add a new sheet and add information
 ### api.js
 ```js
 const output = document.querySelector('.output');
@@ -151,3 +151,18 @@ function makeCell(parent, html, classAdd){
 </body>
 </html>
 ```
+
+## Query Language
+You can check the [Documentation](https://developers.google.com/chart/interactive/docs/querylanguage)
+
+- If you don't have any example and you still using the previous Excel file add a new sheet with the information table provided by documentation link. 
+
+### Encode
+```js
+const select = `select A,B where B='Eng'` //In documentation page you can find more examples.
+const query4 = encodeURIComponent(select);
+
+const endpoint1 = `${url}${ssid}${query1}&${query2}&${query3}&tq=${query4}`;
+output.innerHTML = endpoint1;
+
+``` 
