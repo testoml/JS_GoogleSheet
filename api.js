@@ -4,9 +4,9 @@ const url = "https://docs.google.com/spreadsheets/d/"
 const ssid = "16zTfHycTC8aK7Ng_kPswvcXQzwqE8B-akA275zsfAwQ";
 const query1 = `/gviz/tq?`; //visualization data
 const query2 = 'tqx=out:json';
-const query3 = 'sheet=Test3';
+const query3 = 'sheet=Test4';
 
-const select = `select A,B where B='Eng'`
+const select = `select A, C, D, E, F, I where I is not null and F != 'No disponible'`
 const query4 = encodeURIComponent(select);
 
 const endpoint1 = `${url}${ssid}${query1}&${query2}&${query3}&tq=${query4}`;
@@ -25,7 +25,12 @@ fetch(endpoint1)
     });
     json.table.rows.forEach((row) => {
         const div = makeCell(output, '', 'row');
-        console.log(row);
+        console.log("Producto: " + JSON.stringify(row.c[1]));
+        console.log("Precio: " + JSON.stringify(row.c[2]));
+        console.log("Precio 1: " + JSON.stringify(row.c[3]));
+        console.log("Precio 2: " + JSON.stringify(row.c[4]));
+        console.log("Informacion: " + JSON.stringify(row.c[5]));
+        console.log("Link: " + JSON.stringify(row.c[6]));
         row.c.forEach((cell)=>{
             const ele1 = makeCell(div, `${cell.v}` , 'box')      
         });

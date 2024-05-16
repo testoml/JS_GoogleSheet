@@ -15,7 +15,7 @@ const query4 = encodeURIComponent(select);
 
 
 button.addEventListener('click', getData);
-btnImagen.addEventListener('click', showImagen);
+btnImagen.addEventListener('click', showAllProducts);
 
 function GetEndpoint(){
     var endpoint = `${url}${ssid}${query1}&${query2}`;
@@ -92,10 +92,11 @@ function showImagen(){
   }); 
 }
 
-function showInformation(){
+function showImagenes(){
     //https://drive.google.com/thumbnail?id=1kcjW6G-wqXZSl2ngQ27GWTCLD7lAg-9C
-     var query = `select I where I is not null`
-     var endpoint  =  `${url}${ssid}${query1}&${query2}&sheet=Test4&tq=${query}`;
+     var select = `select I where I is not null`
+     const query4 = encodeURIComponent(select);
+     var endpoint  =  `${url}${ssid}${query1}&${query2}&sheet=Test4&tq=${query4}`;
      fetch(endpoint)
      .then(res => res.text())
      .then(data => {
@@ -105,18 +106,78 @@ function showInformation(){
              row.c.forEach((cell)=>{
                  const url = cell.v;
                  const firstPart = url.split('/d/')[1];
-                 const secondPart = firstPart.split("/")[0];
-                 var id;
-                 if(typeof(secondPart) === 'string'){
-                     id.split('')
-                 } else {
-                     id
-                 }
-                 output.insertAdjacentHTML('beforeend', `
-                 <img width="25%" height="350" src="https://drive.google.com/thumbnail?id=${id}" role="img"><rect width="100%" height="100%" fill="#55595c"/></img>`);                             
+                 const id = firstPart.split("/")[0];
+                 const div= makeCell(output, '', 'box')
+                 div.insertAdjacentHTML('beforeend', `
+                 <img width="100%" height="350" src="https://drive.google.com/thumbnail?id=${id}" role="img"><rect width="100%" height="100%" fill="#55595c"/></img>`);                             
              });
          });
      });  
+   }
+
+   function showProducts(){
+     setTimeout(function(){}, 1000)
+    //https://drive.google.com/thumbnail?id=1kcjW6G-wqXZSl2ngQ27GWTCLD7lAg-9C
+     var select = `select A where I is not null`
+     const query4 = encodeURIComponent(select);
+     var endpoint  =  `${url}${ssid}${query1}&${query2}&sheet=Test4&tq=${query4}`;
+     fetch(endpoint)
+     .then(res => res.text())
+     .then(data => {
+         const temp = data.substring(47).slice(0, -2); 
+         const json = JSON.parse(temp);
+         const cellTemp = [];
+         const box = document.querySelectorAll('.box');
+         json.table.rows.forEach((row) => {
+            row.c.forEach((cell)=>{
+                 cellTemp.push(JSON.stringify(cell.v))                       
+            });
+        });      
+        for (let i = 0; i < box.length; i++) {
+                console.log(cellTemp[i])
+                box[i].insertAdjacentHTML('beforeend', `<label>${cellTemp[i]}</label>`);  
+         }    
+     });  
+   }
+
+   function showInformationAfterImagen(select, tag){
+    setTimeout(function(){}, 3000)
+   //https://drive.google.com/thumbnail?id=1kcjW6G-wqXZSl2ngQ27GWTCLD7lAg-9C
+    //var select = `select A where I is not null`
+    const query4 = encodeURIComponent(select);
+    var endpoint  =  `${url}${ssid}${query1}&${query2}&sheet=Test4&tq=${query4}`;
+    fetch(endpoint)
+    .then(res => res.text())
+    .then(data => {
+        const temp = data.substring(47).slice(0, -2); 
+        const json = JSON.parse(temp);
+        const cellTemp = [];
+        const box = document.querySelectorAll('.box');
+        json.table.rows.forEach((row) => {
+           row.c.forEach((cell)=>{
+                cellTemp.push(JSON.stringify(cell.v))                       
+           });
+       });      
+       for (let i = 0; i < box.length; i++) {
+               if(tag != ""){
+                box[i].insertAdjacentHTML('beforeend', `<br><label>${tag}: ${cellTemp[i]}</label>`);  
+               } else {
+                box[i].insertAdjacentHTML('beforeend', `<br><label>${cellTemp[i]}</label>`);  
+               }
+               
+               //box[i].insertAdjacentHTML('beforeend', `${element}`); 
+        }    
+    });  
+   }
+
+   function showAllProducts(){
+    const where = ` where I is not null and F != 'No disponible'`
+    showImagenes();
+    showInformationAfterImagen(`select A ${where}`, "")
+    showInformationAfterImagen(`select C ${where}`, "Precio")
+    showInformationAfterImagen(`select D ${where}`, "Precio Sugerido 1")
+    showInformationAfterImagen(`select E ${where}`, "Precio Sugerido 2")
+    showInformationAfterImagen(`select F ${where}`, "")
    }
 
 function makeCell(parent, html, classAdd){
