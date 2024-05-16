@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .box{
+            display: inline-block;
+            width: 10%;
+            text-align: center;
+        }
+        .heading{
+            font-size: 1.2em;
+            color:white;
+            background-color: black;
+        }
+        .row{
+
+        }
+        
+    </style>
+</head>
+<body>
+    <h1>Google Sheet as JSON</h1>
+    <div>
+    
+    <div><label>Sheet ID: </label><input type="text" class="mySheet" value="16zTfHycTC8aK7Ng_kPswvcXQzwqE8B-akA275zsfAwQ" name="mySheet"></div>
+    <br>
+    <div><label for="sheets">Select a Sheet: </label><select class="sheets" name="sheets">
+        <option value="">Select</option>
+        <option value="Test1">Test1</option>
+        <option value="Test2">Test2</option>
+        <option value="Test3">Test3</option>
+        <option value="Test4">Test4</option>
+    </select></div>
+    <br>
+    <div><label>Add Query:</label><input type="text" class="myQuery" name="myQuery"></div>
+    <br>
+    <div><button id="request">Request</button>
+    <button class="btnImagen">Show Imagenes</button></div>
+    <div class="output"></div>
+    <script src="./server.js"></script>
+</body>
+</html>

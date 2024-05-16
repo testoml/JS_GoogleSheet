@@ -12,6 +12,7 @@ const query4 = encodeURIComponent(select);
 const endpoint1 = `${url}${ssid}${query1}&${query2}&${query3}&tq=${query4}`;
 output.innerHTML = endpoint1;
 
+
 fetch(endpoint1)
 .then(res => res.text())
 .then(data => {
