@@ -1,5 +1,7 @@
 # JS and GoogleSheet
 
+Documentation: https://docs.google.com/document/d/1aHjIayjpoDQ2hf0own0sieRU10ef0VB4LY2BIi2bnkQ/edit#heading=h.b740kmgvh84w
+
 ### Set project
 Create a new project and add two files 
 - index.html
